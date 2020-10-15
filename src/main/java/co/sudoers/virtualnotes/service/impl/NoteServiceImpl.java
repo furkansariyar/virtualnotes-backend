@@ -14,6 +14,8 @@ import co.sudoers.virtualnotes.util.mappers.TopicMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class NoteServiceImpl implements NoteService {
 
@@ -74,5 +76,11 @@ public class NoteServiceImpl implements NoteService {
             throw new IllegalArgumentException("Note Id is not exist");
         }
         noteRepository.delete(note);
+    }
+
+    @Override
+    public List<Note> getNotesByTopicId(int topicId) {
+        List<Note> noteList = noteRepository.getNotesByTopic_TopicId(topicId);
+        return noteList;
     }
 }
