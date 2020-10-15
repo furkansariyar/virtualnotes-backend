@@ -25,7 +25,7 @@ public class Note {
     @Column(name = "note")
     private String note;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "topic_id")
     private Topic topic;
 }

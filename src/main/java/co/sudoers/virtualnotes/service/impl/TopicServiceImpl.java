@@ -1,9 +1,6 @@
 package co.sudoers.virtualnotes.service.impl;
 
-import co.sudoers.virtualnotes.dto.CreateTopicDto;
-import co.sudoers.virtualnotes.dto.GetNoteDto;
-import co.sudoers.virtualnotes.dto.GetTopicDto;
-import co.sudoers.virtualnotes.dto.UpdateTopicDto;
+import co.sudoers.virtualnotes.dto.*;
 import co.sudoers.virtualnotes.entity.Note;
 import co.sudoers.virtualnotes.entity.Topic;
 import co.sudoers.virtualnotes.repository.TopicRepository;
@@ -74,5 +71,11 @@ public class TopicServiceImpl implements TopicService {
         }
         // Delete topic
         topicRepository.delete(topic);
+    }
+
+    @Override
+    public List<GetTopicDto> getAllTopics() {
+        List<Topic> topicList = topicRepository.findAll();
+        return topicMapper.topicListToGetTopicDtoList(topicList);
     }
 }

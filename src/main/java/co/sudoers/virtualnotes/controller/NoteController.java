@@ -5,11 +5,13 @@ import co.sudoers.virtualnotes.dto.GetNoteDto;
 import co.sudoers.virtualnotes.dto.UpdateNoteDto;
 import co.sudoers.virtualnotes.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/note")
@@ -42,4 +44,10 @@ public class NoteController {
     public void deleteNote(@PathVariable("noteId") int noteId) {
         noteService.deleteNote(noteId);
     }
+
+    @GetMapping("/getNotesByTopicId/{topicId}")
+    public ResponseEntity<List<GetNoteDto>> getAllNotesByTopicId(@PathVariable("topicId") int topicId) {
+        return ResponseEntity.ok(noteService.getNoteDtosByTopicId(topicId));
+    }
+
 }

@@ -22,7 +22,6 @@ public class GetNoteDto {
     @JsonProperty("note")
     private String note;
 
-    @NotNull
     @JsonProperty("topic")
     private Topic topic;
 }

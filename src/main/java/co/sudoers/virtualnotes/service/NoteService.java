@@ -14,4 +14,5 @@ public interface NoteService {
     void deleteNote(int noteId);
 
     List<Note> getNotesByTopicId(int topicId);
+    List<GetNoteDto> getNoteDtosByTopicId(int topicId);
 }

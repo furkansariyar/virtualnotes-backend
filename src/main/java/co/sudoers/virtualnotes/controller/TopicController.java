@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/topic")
@@ -40,6 +41,11 @@ public class TopicController {
     @DeleteMapping("/deleteTopicById/{topicId}")
     public void deleteTopic(@PathVariable("topicId") int topicId) {
         topicService.deleteTopic(topicId);
+    }
+
+    @GetMapping("/getAllTopics")
+    public ResponseEntity<List<GetTopicDto>> getAllTopics() {
+        return ResponseEntity.ok(topicService.getAllTopics());
     }
 
 }

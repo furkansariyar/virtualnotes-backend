@@ -80,7 +80,13 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public List<Note> getNotesByTopicId(int topicId) {
-        List<Note> noteList = noteRepository.getNotesByTopic_TopicId(topicId);
-        return noteList;
+        return noteRepository.getNotesByTopic_TopicId(topicId);
     }
+
+    @Override
+    public List<GetNoteDto> getNoteDtosByTopicId(int topicId) {
+        List<Note> noteList = noteRepository.getNotesByTopic_TopicId(topicId);
+        return noteMapper.noteListToGetNoteDtoList(noteList);
+    }
+
 }
