@@ -6,18 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateNoteDto {
+public class CreateTopicDto {
 
     @NotBlank
-    @JsonProperty("note")
-    private String note;
+    @JsonProperty("topic_name")
+    private String topicName;
 
-    @NotNull
-    @JsonProperty("topic_id")
-    private int topicId;
 }

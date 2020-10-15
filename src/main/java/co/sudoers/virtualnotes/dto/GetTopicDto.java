@@ -11,13 +11,13 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateNoteDto {
-
-    @NotBlank
-    @JsonProperty("note")
-    private String note;
+public class GetTopicDto {
 
     @NotNull
     @JsonProperty("topic_id")
     private int topicId;
+
+    @NotBlank
+    @JsonProperty("topic_name")
+    private String topicName;
 }

@@ -8,11 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateNoteDto {
+public class UpdateTopicDto {
 
-    @JsonProperty("note")
-    private String note;
-
-    @JsonProperty("topic_id")
-    private int topicId;
+    @JsonProperty("topic_name")
+    private String topicName;
 }

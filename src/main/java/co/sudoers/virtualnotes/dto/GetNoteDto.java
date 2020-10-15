@@ -1,5 +1,6 @@
 package co.sudoers.virtualnotes.dto;
 
+import co.sudoers.virtualnotes.entity.Topic;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class GetNoteDto {
     @JsonProperty("note")
     private String note;
 
-    @NotBlank
+    @NotNull
     @JsonProperty("topic")
-    private String topic;
+    private Topic topic;
 }
