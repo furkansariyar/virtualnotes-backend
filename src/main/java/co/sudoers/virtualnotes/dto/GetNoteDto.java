@@ -1,6 +1,9 @@
 package co.sudoers.virtualnotes.dto;
 
 import co.sudoers.virtualnotes.entity.Topic;
+import co.sudoers.virtualnotes.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,4 +27,8 @@ public class GetNoteDto {
 
     @JsonProperty("topic")
     private Topic topic;
+
+    @JsonIgnore
+    @JsonProperty("user")
+    private User user;
 }

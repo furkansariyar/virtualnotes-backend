@@ -20,4 +20,8 @@ public class CreateNoteDto {
     @NotNull
     @JsonProperty("topic_id")
     private int topicId;
+
+    @NotNull
+    @JsonProperty("user_id")
+    private int userId;
 }

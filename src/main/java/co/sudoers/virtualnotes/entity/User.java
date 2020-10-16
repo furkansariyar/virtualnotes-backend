@@ -1,6 +1,7 @@
 package co.sudoers.virtualnotes.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -38,5 +41,8 @@ public class User {
     @NotBlank
     @Column(name = "password")
     private String password;
+
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    private List<Note> notes = new ArrayList<>();
 
 }
