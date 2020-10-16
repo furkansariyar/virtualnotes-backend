@@ -25,7 +25,11 @@ public class Note {
     @Column(name = "note")
     private String note;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "topic_id")
     private Topic topic;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
