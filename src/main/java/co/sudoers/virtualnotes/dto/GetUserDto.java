@@ -5,23 +5,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateNoteDto {
+public class GetUserDto {
 
-    @NotBlank
-    @JsonProperty("note")
-    private String note;
-
-    @NotNull
-    @JsonProperty("topic_id")
-    private int topicId;
-
-    @NotNull
     @JsonProperty("user_id")
     private int userId;
+
+    @JsonProperty("username")
+    private String username;
+
+    @JsonProperty("full_name")
+    private String fullName;
+
+    @JsonProperty("email")
+    private String email;
 }

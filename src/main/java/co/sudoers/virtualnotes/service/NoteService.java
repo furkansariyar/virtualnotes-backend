@@ -15,4 +15,9 @@ public interface NoteService {
 
     List<Note> getNotesByTopicId(int topicId);
     List<GetNoteDto> getNoteDtosByTopicId(int topicId);
+
+    List<Note> getNotesByUserId(int userId);
+    List<GetNoteDto> getNoteDtosByUserId(int userId);
+
+    List<GetNoteDto> getNotesByUserIdAndTopicId(int userId, int topicId);
 }

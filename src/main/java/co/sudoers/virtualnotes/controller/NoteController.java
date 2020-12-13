@@ -50,4 +50,15 @@ public class NoteController {
         return ResponseEntity.ok(noteService.getNoteDtosByTopicId(topicId));
     }
 
+    @GetMapping("/getNotesByUserId/{userId}")
+    public ResponseEntity<List<GetNoteDto>> getAllNotesByUserId(@PathVariable("userId") int userId) {
+        return ResponseEntity.ok(noteService.getNoteDtosByUserId(userId));
+    }
+
+    @GetMapping("/getNotesByUserIdAndTopicId/{userId}/{topicId}")
+    public ResponseEntity<List<GetNoteDto>> getAllNotesByUserIdAndTopicId(@PathVariable("userId") int userId,
+                                                                          @PathVariable("topicId") int topicId) {
+        return ResponseEntity.ok(noteService.getNotesByUserIdAndTopicId(userId, topicId));
+    }
+
 }
