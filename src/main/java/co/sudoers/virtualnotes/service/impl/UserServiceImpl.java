@@ -2,6 +2,7 @@ package co.sudoers.virtualnotes.service.impl;
 
 import co.sudoers.virtualnotes.dto.CreateUserDto;
 import co.sudoers.virtualnotes.dto.GetUserDto;
+import co.sudoers.virtualnotes.dto.RegistrationRequestDto;
 import co.sudoers.virtualnotes.dto.UpdateUserDto;
 import co.sudoers.virtualnotes.entity.Note;
 import co.sudoers.virtualnotes.entity.User;
@@ -9,24 +10,29 @@ import co.sudoers.virtualnotes.repository.UserRepository;
 import co.sudoers.virtualnotes.service.NoteService;
 import co.sudoers.virtualnotes.service.UserService;
 import co.sudoers.virtualnotes.util.mappers.UserMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final NoteService noteService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy NoteService noteService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy NoteService noteService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.noteService = noteService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -77,5 +83,31 @@ public class UserServiceImpl implements UserService {
             note.setUser(null);
         }
         userRepository.delete(user);
+    }
+
+    @Override
+    public Boolean register(RegistrationRequestDto registrationRequestDto) {
+        try {
+            // Check
+            User userCheck = userRepository.getUserByUsername(registrationRequestDto.getUsername());
+            if (userCheck != null) {
+                throw new IllegalArgumentException("This username is already exist");
+            }
+            userCheck = userRepository.getUserByEmail(registrationRequestDto.getEmail());
+            if (userCheck != null) {
+                throw new IllegalArgumentException("This Email is already exist");
+            }
+
+            User user = new User();
+            user.setEmail(registrationRequestDto.getEmail());
+            user.setFullName(registrationRequestDto.getFullName());
+            user.setPassword(bCryptPasswordEncoder.encode(registrationRequestDto.getPassword()));
+            user.setUsername(registrationRequestDto.getUsername());
+            userRepository.save(user);
+            return Boolean.TRUE;
+        } catch (Exception e) {
+            log.error("REGISTRATION => ", e);
+            return Boolean.FALSE;
+        }
     }
 }

@@ -1,5 +1,8 @@
 package co.sudoers.virtualnotes.configuration;
 
+import co.sudoers.virtualnotes.security.JwtAuthenticationEntryPoint;
+import co.sudoers.virtualnotes.security.JwtAuthenticationFilter;
+import co.sudoers.virtualnotes.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,14 +24,13 @@ import javax.annotation.Resource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
-
-    @Resource(name = "userService")
-    private UserDetailsService userDetailsService;
+    private final JwtAuthenticationEntryPoint unauthorizedHandler;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public SecurityConfig(JwtAuthenticationEntryPoint unauthorizedHandler) {
+    public SecurityConfig(JwtAuthenticationEntryPoint unauthorizedHandler, UserDetailsServiceImpl userDetailsService) {
         this.unauthorizedHandler = unauthorizedHandler;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -43,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtAuthenticationFilter authenticationTokenFilterBean throws Exception {
+    public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
         return new JwtAuthenticationFilter();
     }
 
