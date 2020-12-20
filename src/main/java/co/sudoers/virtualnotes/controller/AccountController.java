@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.naming.AuthenticationException;
 
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/api/token")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AccountController {
 
