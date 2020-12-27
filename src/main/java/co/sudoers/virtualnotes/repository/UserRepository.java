@@ -3,8 +3,10 @@ package co.sudoers.virtualnotes.repository;
 import co.sudoers.virtualnotes.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-    User getUserByUserId(int userId);
+import java.util.UUID;
+
+public interface UserRepository extends JpaRepository<User, UUID> {
+    User getUserByUserId(UUID userId);
     User getUserByUsername(String username);
     User getUserByEmail(String email);
 }

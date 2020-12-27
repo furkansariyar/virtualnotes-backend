@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -15,7 +16,7 @@ public class GetTopicDto {
 
     @NotNull
     @JsonProperty("topic_id")
-    private int topicId;
+    private UUID topicId;
 
     @NotBlank
     @JsonProperty("topic_name")

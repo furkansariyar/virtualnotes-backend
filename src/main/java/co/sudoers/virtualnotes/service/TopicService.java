@@ -5,12 +5,13 @@ import co.sudoers.virtualnotes.dto.GetTopicDto;
 import co.sudoers.virtualnotes.dto.UpdateTopicDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface TopicService {
     GetTopicDto saveTopic(CreateTopicDto createTopicDto);
-    GetTopicDto getTopic(int topicId);
-    GetTopicDto updateTopic(int topicId, UpdateTopicDto updateTopicDto);
-    void deleteTopic(int topicId);
+    GetTopicDto getTopic(UUID topicId);
+    GetTopicDto updateTopic(UUID topicId, UpdateTopicDto updateTopicDto);
+    void deleteTopic(UUID topicId);
 
     List<GetTopicDto> getAllTopics();
 }

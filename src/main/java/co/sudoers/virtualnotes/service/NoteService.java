@@ -6,18 +6,19 @@ import co.sudoers.virtualnotes.dto.UpdateNoteDto;
 import co.sudoers.virtualnotes.entity.Note;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface NoteService {
     GetNoteDto saveNote(CreateNoteDto createNoteDto);
-    GetNoteDto getNote(int noteId);
-    GetNoteDto updateNote(int noteId, UpdateNoteDto updateNoteDto);
-    void deleteNote(int noteId);
+    GetNoteDto getNote(UUID noteId);
+    GetNoteDto updateNote(UUID noteId, UpdateNoteDto updateNoteDto);
+    void deleteNote(UUID noteId);
 
-    List<Note> getNotesByTopicId(int topicId);
-    List<GetNoteDto> getNoteDtosByTopicId(int topicId);
+    List<Note> getNotesByTopicId(UUID topicId);
+    List<GetNoteDto> getNoteDtosByTopicId(UUID topicId);
 
-    List<Note> getNotesByUserId(int userId);
-    List<GetNoteDto> getNoteDtosByUserId(int userId);
+    List<Note> getNotesByUserId(UUID userId);
+    List<GetNoteDto> getNoteDtosByUserId(UUID userId);
 
-    List<GetNoteDto> getNotesByUserIdAndTopicId(int userId, int topicId);
+    List<GetNoteDto> getNotesByUserIdAndTopicId(UUID userId, UUID topicId);
 }

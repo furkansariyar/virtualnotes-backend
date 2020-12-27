@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users", indexes = {@Index(name = "idx_username", columnList = "username")})
@@ -21,9 +23,13 @@ public class User {
 
     @Id
     @NotNull
-    @GeneratedValue(generator = "user_seq")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     @Column(name = "user_id")
-    private int userId;
+    private UUID userId;
 
     @NotBlank
     @Column(name = "username", unique = true)

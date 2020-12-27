@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/topic")
@@ -27,19 +28,19 @@ public class TopicController {
     }
 
     @GetMapping("/getTopicById/{topicId}")
-    public ResponseEntity<GetTopicDto> getTopic(@PathVariable("topicId") int topicId) {
+    public ResponseEntity<GetTopicDto> getTopic(@PathVariable("topicId") UUID topicId) {
         return ResponseEntity.ok(topicService.getTopic(topicId));
     }
 
     @PutMapping("/updateTopicById/{topicId}")
-    public ResponseEntity<GetTopicDto> updateTopic(@PathVariable("topicId") int topicId,
+    public ResponseEntity<GetTopicDto> updateTopic(@PathVariable("topicId") UUID topicId,
                                                    @Valid @RequestBody UpdateTopicDto updateTopicDto) {
         return ResponseEntity.ok(topicService.updateTopic(topicId, updateTopicDto));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/deleteTopicById/{topicId}")
-    public void deleteTopic(@PathVariable("topicId") int topicId) {
+    public void deleteTopic(@PathVariable("topicId") UUID topicId) {
         topicService.deleteTopic(topicId);
     }
 

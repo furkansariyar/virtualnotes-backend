@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/note")
@@ -30,34 +31,34 @@ public class NoteController {
     }
 
     @GetMapping("/getNoteById/{noteId}")
-    public ResponseEntity<GetNoteDto> getNote(@PathVariable("noteId") int noteId) {
+    public ResponseEntity<GetNoteDto> getNote(@PathVariable("noteId") UUID noteId) {
         return ResponseEntity.ok(noteService.getNote(noteId));
     }
 
     @PutMapping("/updateNoteById/{noteId}")
-    public ResponseEntity<GetNoteDto> updateNote(@PathVariable("noteId") int noteId, @Valid @RequestBody UpdateNoteDto updateNoteDto) {
+    public ResponseEntity<GetNoteDto> updateNote(@PathVariable("noteId") UUID noteId, @Valid @RequestBody UpdateNoteDto updateNoteDto) {
         return ResponseEntity.ok(noteService.updateNote(noteId, updateNoteDto));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/deleteNoteById/{noteId}")
-    public void deleteNote(@PathVariable("noteId") int noteId) {
+    public void deleteNote(@PathVariable("noteId") UUID noteId) {
         noteService.deleteNote(noteId);
     }
 
     @GetMapping("/getNotesByTopicId/{topicId}")
-    public ResponseEntity<List<GetNoteDto>> getAllNotesByTopicId(@PathVariable("topicId") int topicId) {
+    public ResponseEntity<List<GetNoteDto>> getAllNotesByTopicId(@PathVariable("topicId") UUID topicId) {
         return ResponseEntity.ok(noteService.getNoteDtosByTopicId(topicId));
     }
 
     @GetMapping("/getNotesByUserId/{userId}")
-    public ResponseEntity<List<GetNoteDto>> getAllNotesByUserId(@PathVariable("userId") int userId) {
+    public ResponseEntity<List<GetNoteDto>> getAllNotesByUserId(@PathVariable("userId") UUID userId) {
         return ResponseEntity.ok(noteService.getNoteDtosByUserId(userId));
     }
 
     @GetMapping("/getNotesByUserIdAndTopicId/{userId}/{topicId}")
-    public ResponseEntity<List<GetNoteDto>> getAllNotesByUserIdAndTopicId(@PathVariable("userId") int userId,
-                                                                          @PathVariable("topicId") int topicId) {
+    public ResponseEntity<List<GetNoteDto>> getAllNotesByUserIdAndTopicId(@PathVariable("userId") UUID userId,
+                                                                          @PathVariable("topicId") UUID topicId) {
         return ResponseEntity.ok(noteService.getNotesByUserIdAndTopicId(userId, topicId));
     }
 

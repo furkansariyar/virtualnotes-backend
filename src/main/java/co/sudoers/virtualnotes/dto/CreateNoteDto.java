@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -19,9 +20,9 @@ public class CreateNoteDto {
 
     @NotNull
     @JsonProperty("topic_id")
-    private int topicId;
+    private UUID topicId;
 
     @NotNull
     @JsonProperty("user_id")
-    private int userId;
+    private UUID userId;
 }

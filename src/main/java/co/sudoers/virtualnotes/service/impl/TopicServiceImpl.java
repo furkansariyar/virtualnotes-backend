@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TopicServiceImpl implements TopicService {
@@ -35,7 +36,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public GetTopicDto getTopic(int topicId) {
+    public GetTopicDto getTopic(UUID topicId) {
         Topic topic = topicRepository.getTopicByTopicId(topicId);
         if (topic == null) {
             throw new IllegalArgumentException("Topic Id is not exist");
@@ -44,7 +45,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public GetTopicDto updateTopic(int topicId, UpdateTopicDto updateTopicDto) {
+    public GetTopicDto updateTopic(UUID topicId, UpdateTopicDto updateTopicDto) {
         Topic topic = topicRepository.getTopicByTopicId(topicId);
         if (topic == null) {
             throw new IllegalArgumentException("Topic Id is not exist");
@@ -57,7 +58,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public void deleteTopic(int topicId) {
+    public void deleteTopic(UUID topicId) {
         Topic topic = topicRepository.getTopicByTopicId(topicId);
         if (topic == null) {
             throw new IllegalArgumentException("Topic Id is not exist");

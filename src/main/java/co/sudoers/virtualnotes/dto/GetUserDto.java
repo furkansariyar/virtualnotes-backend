@@ -5,13 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetUserDto {
 
     @JsonProperty("user_id")
-    private int userId;
+    private UUID userId;
 
     @JsonProperty("username")
     private String username;

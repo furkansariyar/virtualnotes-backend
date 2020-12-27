@@ -5,11 +5,13 @@ import co.sudoers.virtualnotes.dto.GetUserDto;
 import co.sudoers.virtualnotes.dto.RegistrationRequestDto;
 import co.sudoers.virtualnotes.dto.UpdateUserDto;
 
+import java.util.UUID;
+
 public interface UserService {
 
     GetUserDto saveUser(CreateUserDto createUserDto);
-    GetUserDto getUser(int userId);
-    GetUserDto updateUser(int userId, UpdateUserDto updateUserDto);
-    void deleteUser(int userId);
+    GetUserDto getUser(UUID userId);
+    GetUserDto updateUser(UUID userId, UpdateUserDto updateUserDto);
+    void deleteUser(UUID userId);
     Boolean register(RegistrationRequestDto registrationRequestDto);
 }

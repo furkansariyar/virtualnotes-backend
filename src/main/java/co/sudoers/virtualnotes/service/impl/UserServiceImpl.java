@@ -17,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GetUserDto getUser(int userId) {
+    public GetUserDto getUser(UUID userId) {
         User user = userRepository.getUserByUserId(userId);
         if (user == null) {
             throw new IllegalArgumentException("User Id is not exist");
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GetUserDto updateUser(int userId, UpdateUserDto updateUserDto) {
+    public GetUserDto updateUser(UUID userId, UpdateUserDto updateUserDto) {
         User user = userRepository.getUserByUserId(userId);
         if (user == null) {
             throw new IllegalArgumentException("User Id is not exist");
@@ -72,7 +73,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(int userId) {
+    public void deleteUser(UUID userId) {
         User user = userRepository.getUserByUserId(userId);
         if (user == null) {
             throw new IllegalArgumentException("User Id is not exist");

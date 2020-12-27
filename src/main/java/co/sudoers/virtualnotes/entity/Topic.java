@@ -3,12 +3,14 @@ package co.sudoers.virtualnotes.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "topic")
@@ -19,9 +21,13 @@ public class Topic {
 
     @Id
     @NotNull
-    @GeneratedValue(generator = "topic_seq")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
     @Column(name = "topic_id")
-    private int topicId;
+    private UUID topicId;
 
     @NotBlank
     @Column(name = "topic_name")

@@ -8,6 +8,7 @@ import co.sudoers.virtualnotes.repository.NoteRepository;
 import co.sudoers.virtualnotes.service.NoteService;
 import co.sudoers.virtualnotes.service.TopicService;
 import co.sudoers.virtualnotes.service.UserService;
+import co.sudoers.virtualnotes.util.Util;
 import co.sudoers.virtualnotes.util.mappers.NoteMapper;
 import co.sudoers.virtualnotes.util.mappers.TopicMapper;
 import co.sudoers.virtualnotes.util.mappers.UserMapper;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -53,7 +55,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public GetNoteDto getNote(int noteId) {
+    public GetNoteDto getNote(UUID noteId) {
         Note note = noteRepository.getNoteByNoteId(noteId);
         if (note == null) {
             throw new IllegalArgumentException("Note Id is not exist");
@@ -61,8 +63,9 @@ public class NoteServiceImpl implements NoteService {
         return noteMapper.noteToGetNoteDto(note);
     }
 
+    // TODO: 27.12.2020 bunun logic ini kontrol et 
     @Override
-    public GetNoteDto updateNote(int noteId, UpdateNoteDto updateNoteDto) {
+    public GetNoteDto updateNote(UUID noteId, UpdateNoteDto updateNoteDto) {
         Note note = noteRepository.getNoteByNoteId(noteId);
         if (note == null) {
             throw new IllegalArgumentException("Note Id is not exist");
@@ -70,7 +73,8 @@ public class NoteServiceImpl implements NoteService {
         if (updateNoteDto.getNote() != null) {
             note.setNote(updateNoteDto.getNote());
         }
-        if (updateNoteDto.getTopicId() != 0) {
+        // TODO: 27.12.2020 var olan topicler arasında search yapılıyor ama buna user parametresı de eklenmesı lazım 
+        if (Util.topicIsExist(updateNoteDto.getTopicId())) {
             note.setTopic(topicMapper.getTopicDtoToTopic(topicService.getTopic(updateNoteDto.getTopicId())));
         }
         noteRepository.save(note);
@@ -78,7 +82,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public void deleteNote(int noteId) {
+    public void deleteNote(UUID noteId) {
         Note note = noteRepository.getNoteByNoteId(noteId);
         if (note == null) {
             throw new IllegalArgumentException("Note Id is not exist");
@@ -87,29 +91,29 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<Note> getNotesByTopicId(int topicId) {
+    public List<Note> getNotesByTopicId(UUID topicId) {
         return noteRepository.getNotesByTopic_TopicId(topicId);
     }
 
     @Override
-    public List<GetNoteDto> getNoteDtosByTopicId(int topicId) {
+    public List<GetNoteDto> getNoteDtosByTopicId(UUID topicId) {
         List<Note> noteList = noteRepository.getNotesByTopic_TopicId(topicId);
         return noteMapper.noteListToGetNoteDtoList(noteList);
     }
 
     @Override
-    public List<Note> getNotesByUserId(int userId) {
+    public List<Note> getNotesByUserId(UUID userId) {
         return noteRepository.getNotesByUser_UserId(userId);
     }
 
     @Override
-    public List<GetNoteDto> getNoteDtosByUserId(int userId) {
+    public List<GetNoteDto> getNoteDtosByUserId(UUID userId) {
         List<Note> noteList = noteRepository.getNotesByUser_UserId(userId);
         return noteMapper.noteListToGetNoteDtoList(noteList);
     }
 
     @Override
-    public List<GetNoteDto> getNotesByUserIdAndTopicId(int userId, int topicId) {
+    public List<GetNoteDto> getNotesByUserIdAndTopicId(UUID userId, UUID topicId) {
         List<Note> noteList = noteRepository.getNotesByUser_UserIdAndTopic_TopicId(userId, topicId);
         return noteMapper.noteListToGetNoteDtoList(noteList);
     }

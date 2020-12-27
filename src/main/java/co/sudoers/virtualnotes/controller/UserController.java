@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -24,7 +25,7 @@ public class UserController {
     }
 
     @GetMapping("/getUserById/{userId}")
-    public ResponseEntity<GetUserDto> getUser(@PathVariable("userId") int userId) {
+    public ResponseEntity<GetUserDto> getUser(@PathVariable("userId") UUID userId) {
         return ResponseEntity.ok(userService.getUser(userId));
     }
 
@@ -34,14 +35,14 @@ public class UserController {
     }
 
     @PutMapping("/updateUserById/{userId}")
-    public ResponseEntity<GetUserDto> updateUser(@PathVariable("userId") int userId,
+    public ResponseEntity<GetUserDto> updateUser(@PathVariable("userId") UUID userId,
                                                  @Valid @RequestBody UpdateUserDto updateUserDto) {
         return ResponseEntity.ok(userService.updateUser(userId, updateUserDto));
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/deleteUserById/{userId}")
-    public void deleteUser(@PathVariable("userId") int userId) {
+    public void deleteUser(@PathVariable("userId") UUID userId) {
         userService.deleteUser(userId);
     }
 }
