@@ -49,4 +49,9 @@ public class TopicController {
         return ResponseEntity.ok(topicService.getAllTopics());
     }
 
+    @GetMapping("/getAllTopicsByUserId/{userId}")
+    public ResponseEntity<List<GetTopicDto>> getAllTopicsByUserId(@PathVariable("userId") UUID userId) {
+        return ResponseEntity.ok(topicService.getAllTopicsByUserId(userId));
+    }
+
 }

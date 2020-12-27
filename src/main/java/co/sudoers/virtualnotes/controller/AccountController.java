@@ -43,7 +43,7 @@ public class AccountController {
                 request.getUsername(), request.getPassword()));
         final User user = userDetailsService.getUserByUsername(request.getUsername());
         final String token = jwtTokenUtil.generateToken(user);
-        return ResponseEntity.ok(new TokenResponse(user.getUsername(), token));
+        return ResponseEntity.ok(new TokenResponse(user.getUserId(), user.getUsername(), token));
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

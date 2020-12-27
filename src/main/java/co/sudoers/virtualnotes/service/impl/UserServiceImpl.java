@@ -99,6 +99,8 @@ public class UserServiceImpl implements UserService {
                 throw new IllegalArgumentException("This Email is already exist");
             }
 
+            // TODO: 27.12.2020 send email registration information async
+
             User user = new User();
             user.setEmail(registrationRequestDto.getEmail());
             user.setFullName(registrationRequestDto.getFullName());

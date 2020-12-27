@@ -14,4 +14,5 @@ public interface TopicService {
     void deleteTopic(UUID topicId);
 
     List<GetTopicDto> getAllTopics();
+    List<GetTopicDto> getAllTopicsByUserId(UUID userId);
 }

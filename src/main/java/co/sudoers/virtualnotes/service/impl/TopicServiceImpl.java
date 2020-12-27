@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -77,5 +78,15 @@ public class TopicServiceImpl implements TopicService {
     public List<GetTopicDto> getAllTopics() {
         List<Topic> topicList = topicRepository.findAll();
         return topicMapper.topicListToGetTopicDtoList(topicList);
+    }
+
+    @Override
+    public List<GetTopicDto> getAllTopicsByUserId(UUID userId) {
+        List<Note> userNoteList = this.noteService.getNotesByUserId(userId);
+        List<GetTopicDto> getTopicDtoList = new ArrayList<>();
+        for (Note note : userNoteList) {
+            getTopicDtoList.add(topicMapper.topicToGetTopicDto(note.getTopic()));
+        }
+        return getTopicDtoList;
     }
 }
