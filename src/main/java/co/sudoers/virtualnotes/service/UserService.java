@@ -13,5 +13,5 @@ public interface UserService {
     GetUserDto getUser(UUID userId);
     GetUserDto updateUser(UUID userId, UpdateUserDto updateUserDto);
     void deleteUser(UUID userId);
-    Boolean register(RegistrationRequestDto registrationRequestDto);
+    String register(RegistrationRequestDto registrationRequestDto);
 }

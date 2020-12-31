@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/api/token")
@@ -47,9 +48,17 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> register(@RequestBody RegistrationRequestDto registrationRequest)
+    public ResponseEntity<HashMap<String, String>> register(@RequestBody RegistrationRequestDto registrationRequest)
             throws AuthenticationException {
-        Boolean response = userService.register(registrationRequest);
-        return ResponseEntity.ok(response);
+        String response = userService.register(registrationRequest);
+        HashMap<String, String> res = new HashMap<>();
+        if (response.equals("ok")) {
+            res.put("status", "true");
+            res.put("response", response);
+            return ResponseEntity.ok(res);
+        }
+        res.put("status", "false");
+        res.put("response", response);
+        return ResponseEntity.ok(res);
     }
 }

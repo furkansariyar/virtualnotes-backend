@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean register(RegistrationRequestDto registrationRequestDto) {
+    public String register(RegistrationRequestDto registrationRequestDto) {
         try {
             // Check
             User userCheck = userRepository.getUserByUsername(registrationRequestDto.getUsername());
@@ -107,10 +107,10 @@ public class UserServiceImpl implements UserService {
             user.setPassword(bCryptPasswordEncoder.encode(registrationRequestDto.getPassword()));
             user.setUsername(registrationRequestDto.getUsername());
             userRepository.save(user);
-            return Boolean.TRUE;
+            return "ok";
         } catch (Exception e) {
             log.error("REGISTRATION => ", e);
-            return Boolean.FALSE;
+            return e.getMessage();
         }
     }
 }
