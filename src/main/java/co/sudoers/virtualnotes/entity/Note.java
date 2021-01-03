@@ -1,8 +1,6 @@
 package co.sudoers.virtualnotes.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,7 +10,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "note")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Note {

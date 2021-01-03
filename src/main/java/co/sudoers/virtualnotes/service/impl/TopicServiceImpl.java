@@ -84,8 +84,15 @@ public class TopicServiceImpl implements TopicService {
     public List<GetTopicDto> getAllTopicsByUserId(UUID userId) {
         List<Note> userNoteList = this.noteService.getNotesByUserId(userId);
         List<GetTopicDto> getTopicDtoList = new ArrayList<>();
+        List<UUID> idList = new ArrayList<>();
         for (Note note : userNoteList) {
-            getTopicDtoList.add(topicMapper.topicToGetTopicDto(note.getTopic()));
+            if (idList.size() == 0) {
+                idList.add(note.getTopic().getTopicId());
+                getTopicDtoList.add(topicMapper.topicToGetTopicDto(note.getTopic()));
+            } else if(!idList.contains(note.getTopic().getTopicId())) {
+                getTopicDtoList.add(topicMapper.topicToGetTopicDto(note.getTopic()));
+                idList.add(note.getTopic().getTopicId());
+            }
         }
         return getTopicDtoList;
     }

@@ -11,8 +11,12 @@ import java.util.UUID;
 @Component
 public class Util {
 
-    @Autowired
     private static TopicService topicService;
+
+    @Autowired
+    public Util(TopicService topicService) {
+        this.topicService = topicService;
+    }
 
     public UUID getRandomUUID() {
         return UUID.randomUUID();
@@ -21,7 +25,7 @@ public class Util {
     public static Boolean topicIsExist(UUID topicId) {
         List<GetTopicDto> allTopics = topicService.getAllTopics();
         for (GetTopicDto topic : allTopics) {
-            if (topic.getTopicId() == topicId) {
+            if (topic.getTopicId().equals(topicId)) {
                 return Boolean.TRUE;
             }
         }
