@@ -21,4 +21,6 @@ public interface NoteService {
     List<GetNoteDto> getNoteDtosByUserId(UUID userId);
 
     List<GetNoteDto> getNotesByUserIdAndTopicId(UUID userId, UUID topicId);
+
+    List<GetNoteDto> searchNotes(UUID userId, String searchedText);
 }

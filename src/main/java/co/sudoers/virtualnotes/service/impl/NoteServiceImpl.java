@@ -118,4 +118,10 @@ public class NoteServiceImpl implements NoteService {
         return noteMapper.noteListToGetNoteDtoList(noteList);
     }
 
+    @Override
+    public List<GetNoteDto> searchNotes(UUID userId, String searchedText) {
+        List<Note> noteList = noteRepository.findAllByUser_UserIdAndNoteContains(userId, searchedText);
+        return noteMapper.noteListToGetNoteDtoList(noteList);
+    }
+
 }

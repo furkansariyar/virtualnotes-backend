@@ -62,4 +62,10 @@ public class NoteController {
         return ResponseEntity.ok(noteService.getNotesByUserIdAndTopicId(userId, topicId));
     }
 
+    @GetMapping("/searchNotes/{userId}/{searchedText}")
+    public ResponseEntity<List<GetNoteDto>> getAllNotesByUserIdAndTopicId(@PathVariable("userId") UUID userId,
+                                                                          @PathVariable("searchedText") String searchedText) {
+        return ResponseEntity.ok(noteService.searchNotes(userId, searchedText));
+    }
+
 }
