@@ -2,9 +2,7 @@ package co.sudoers.virtualnotes.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -16,7 +14,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users", indexes = {@Index(name = "idx_username", columnList = "username")})
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
