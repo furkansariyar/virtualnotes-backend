@@ -15,4 +15,6 @@ public interface TopicService {
 
     List<GetTopicDto> getAllTopics();
     List<GetTopicDto> getAllTopicsByUserId(UUID userId);
+
+    List<UUID> searchTopics(List<GetTopicDto> topics, String searchedText);
 }

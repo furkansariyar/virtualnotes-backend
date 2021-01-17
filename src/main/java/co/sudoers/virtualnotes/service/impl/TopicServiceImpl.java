@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TopicServiceImpl implements TopicService {
@@ -95,5 +96,23 @@ public class TopicServiceImpl implements TopicService {
             }
         }
         return getTopicDtoList;
+    }
+
+    @Override
+    public List<UUID> searchTopics(List<GetTopicDto> topics, String searchedText) {
+        List<Topic> foundTopics = topicRepository.findAllByTopicNameContains(searchedText);
+        List<UUID> foundTopicsIDs = foundTopics.stream()
+                .map(Topic::getTopicId)
+                .collect(Collectors.toList());
+        List<UUID> userTopicsIDs = topics.stream()
+                .map(GetTopicDto::getTopicId)
+                .collect(Collectors.toList());
+        List<UUID> returnedTopicIdList = new ArrayList<>();
+        for (UUID foundTopicsID : foundTopicsIDs) {
+            if (userTopicsIDs.contains(foundTopicsID)) {
+                returnedTopicIdList.add(foundTopicsID);
+            }
+        }
+        return returnedTopicIdList;
     }
 }

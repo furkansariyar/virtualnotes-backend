@@ -15,8 +15,10 @@ import co.sudoers.virtualnotes.util.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -121,6 +123,20 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public List<GetNoteDto> searchNotes(UUID userId, String searchedText) {
         List<Note> noteList = noteRepository.findAllByUser_UserIdAndNoteContains(userId, searchedText);
+        List<GetTopicDto> topicList = topicService.getAllTopicsByUserId(userId);
+        List<UUID> foundTopicIdList = topicService.searchTopics(topicList, searchedText);
+        List<UUID> noteListTopicIdList = noteList.stream()
+                .distinct()
+                .map(Note::getTopic).map(Topic::getTopicId)
+                .collect(Collectors.toList());
+        List<Note> willBeAddedNoteList = new ArrayList<>();
+        for (UUID topicId : foundTopicIdList) {
+            if (!noteListTopicIdList.contains(topicId)) {
+                willBeAddedNoteList.clear();
+                willBeAddedNoteList = noteRepository.getNotesByUser_UserIdAndTopic_TopicId(userId, topicId);
+                noteList.addAll(willBeAddedNoteList);
+            }
+        }
         return noteMapper.noteListToGetNoteDtoList(noteList);
     }
 
