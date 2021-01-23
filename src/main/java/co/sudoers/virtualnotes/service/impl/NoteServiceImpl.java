@@ -75,7 +75,6 @@ public class NoteServiceImpl implements NoteService {
         if (updateNoteDto.getNote() != null) {
             note.setNote(updateNoteDto.getNote());
         }
-        // TODO: 27.12.2020 var olan topicler arasında search yapılıyor ama buna user parametresı de eklenmesı lazım 
         if (Util.topicIsExist(updateNoteDto.getTopicId())) {
             note.setTopic(topicMapper.getTopicDtoToTopic(topicService.getTopic(updateNoteDto.getTopicId())));
         }
@@ -138,6 +137,25 @@ public class NoteServiceImpl implements NoteService {
             }
         }
         return noteMapper.noteListToGetNoteDtoList(noteList);
+    }
+
+    @Override
+    public List<GetNoteDto> bulkNoteUpdate(List<UpdateNoteDto> updateNoteDtoList) {
+        List<GetNoteDto> getNoteDtoList = new ArrayList<>();
+        GetNoteDto getNoteDto;
+        for (UpdateNoteDto updateNoteDto: updateNoteDtoList) {
+            Note note = noteRepository.getNoteByNoteId(updateNoteDto.getNoteId());
+            if (note == null) {
+                throw new IllegalArgumentException("Note Id is not exist");
+            }
+            if (Util.topicIsExist(updateNoteDto.getTopicId())) {
+                note.setTopic(topicMapper.getTopicDtoToTopic(topicService.getTopic(updateNoteDto.getTopicId())));
+            }
+            noteRepository.save(note);
+            getNoteDto = getNote(note.getNoteId());
+            getNoteDtoList.add(getNoteDto);
+        }
+        return getNoteDtoList;
     }
 
 }

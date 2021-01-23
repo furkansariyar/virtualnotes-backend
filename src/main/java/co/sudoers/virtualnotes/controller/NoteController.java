@@ -40,10 +40,16 @@ public class NoteController {
         return ResponseEntity.ok(noteService.getNote(noteId));
     }
 
-    @ApiOperation(value = "Update Note By Id", response = GetNoteDto.class)
+    @ApiOperation(value = "Note Update By Id", response = GetNoteDto.class)
     @PutMapping("/updateNoteById/{noteId}")
     public ResponseEntity<GetNoteDto> updateNote(@PathVariable("noteId") UUID noteId, @Valid @RequestBody UpdateNoteDto updateNoteDto) {
         return ResponseEntity.ok(noteService.updateNote(noteId, updateNoteDto));
+    }
+
+    @ApiOperation(value = "Bulk Note Update By Id", response = GetNoteDto.class)
+    @PutMapping("/bulkUpdateNote")
+    public ResponseEntity<List<GetNoteDto>> bulkUpdateNote(@Valid @RequestBody List<UpdateNoteDto> updateNoteDtoList) {
+        return ResponseEntity.ok(noteService.bulkNoteUpdate(updateNoteDtoList));
     }
 
     @ApiOperation(value = "Delete Note By Id")

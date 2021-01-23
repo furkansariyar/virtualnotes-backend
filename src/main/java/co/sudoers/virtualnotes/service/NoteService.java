@@ -13,14 +13,11 @@ public interface NoteService {
     GetNoteDto getNote(UUID noteId);
     GetNoteDto updateNote(UUID noteId, UpdateNoteDto updateNoteDto);
     void deleteNote(UUID noteId);
-
     List<Note> getNotesByTopicId(UUID topicId);
     List<GetNoteDto> getNoteDtosByTopicId(UUID topicId);
-
     List<Note> getNotesByUserId(UUID userId);
     List<GetNoteDto> getNoteDtosByUserId(UUID userId);
-
     List<GetNoteDto> getNotesByUserIdAndTopicId(UUID userId, UUID topicId);
-
     List<GetNoteDto> searchNotes(UUID userId, String searchedText);
+    List<GetNoteDto> bulkNoteUpdate(List<UpdateNoteDto> updateNoteDtoList);
 }

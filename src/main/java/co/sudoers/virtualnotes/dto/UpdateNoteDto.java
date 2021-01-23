@@ -15,6 +15,10 @@ import java.util.UUID;
 @ApiModel(value = "Updating Note Data Transfer Object")
 public class UpdateNoteDto {
 
+    @JsonProperty("note_id")
+    @ApiModelProperty(value = "Note ID")
+    private UUID noteId;
+
     @JsonProperty("note")
     @ApiModelProperty(value = "Note Content")
     private String note;
