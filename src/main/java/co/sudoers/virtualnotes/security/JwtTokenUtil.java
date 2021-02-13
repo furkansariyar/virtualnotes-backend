@@ -15,9 +15,9 @@ import java.util.function.Function;
 @Component
 public class JwtTokenUtil {
 
-    // 1Gün
+    // 1 Day
     public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 24 * 60 * 60 * 1000;
-    public static final String SIGNING_KEY = "SIGNINGKEY";
+    public static final String SIGNING_KEY = "sudo-vn-fs"; // signing key for token
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
