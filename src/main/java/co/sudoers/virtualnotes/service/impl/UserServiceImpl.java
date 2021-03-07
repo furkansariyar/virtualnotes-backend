@@ -1,14 +1,12 @@
 package co.sudoers.virtualnotes.service.impl;
 
-import co.sudoers.virtualnotes.dto.CreateUserDto;
-import co.sudoers.virtualnotes.dto.GetUserDto;
-import co.sudoers.virtualnotes.dto.RegistrationRequestDto;
-import co.sudoers.virtualnotes.dto.UpdateUserDto;
+import co.sudoers.virtualnotes.dto.*;
 import co.sudoers.virtualnotes.entity.Note;
 import co.sudoers.virtualnotes.entity.User;
 import co.sudoers.virtualnotes.repository.UserRepository;
 import co.sudoers.virtualnotes.service.NoteService;
 import co.sudoers.virtualnotes.service.UserService;
+import co.sudoers.virtualnotes.util.ExtractToExcel;
 import co.sudoers.virtualnotes.util.mappers.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,13 +26,15 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final NoteService noteService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ExtractToExcel extractToExcel;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy NoteService noteService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, @Lazy NoteService noteService, BCryptPasswordEncoder bCryptPasswordEncoder, ExtractToExcel extractToExcel) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.noteService = noteService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.extractToExcel = extractToExcel;
     }
 
     @Override
@@ -110,5 +111,11 @@ public class UserServiceImpl implements UserService {
             log.error("REGISTRATION => ", e);
             return e.getMessage();
         }
+    }
+
+    @Override
+    public ByteArrayInputStream exportNotesByUserId(UUID userId) {
+        List<GetNoteDto> notes = this.noteService.getNoteDtosByUserId(userId);
+        return this.extractToExcel.extract(notes);
     }
 }

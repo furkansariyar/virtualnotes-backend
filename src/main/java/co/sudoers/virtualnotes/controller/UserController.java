@@ -9,11 +9,15 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 import java.util.UUID;
 
 @RestController
@@ -52,5 +56,19 @@ public class UserController {
     @DeleteMapping("/deleteUserById/{userId}")
     public void deleteUser(@PathVariable("userId") UUID userId) {
         userService.deleteUser(userId);
+    }
+
+    @ApiOperation(value = "Export Notes By User Id")
+    @GetMapping("/exportNotesByUserId/{userId}")
+    public ResponseEntity<InputStreamResource> exportNotes(@PathVariable("userId") UUID userId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=VirtualNotes-"
+                + userService.getUser(userId).getUsername() + ".xlsx");
+        ByteArrayInputStream in = this.userService.exportNotesByUserId(userId);
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+                .body(new InputStreamResource(in));
     }
 }
